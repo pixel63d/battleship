@@ -57,6 +57,14 @@ class Board
         $bD->addBoard($this->name, $json );
     }
 
+    public function update(){
+        $json=json_encode($this->matrix);
+//        file_put_contents(__DIR__ . '/temp/'. $this->name, $json);
+        //Вставка в БД
+        $bD = new Bd();
+        $bD->updateBoard($this->name, $json );
+    }
+
     public function load(){
         //$value=прочитать из файла
         //$this->matrix=json_decode($value);
@@ -74,5 +82,29 @@ class Board
         }
 
         return true;
+    }
+    public function shot($coordx, $coordy){
+        if ($this->matrix[$coordx][$coordy] ==1){
+            $this->matrix[$coordx][$coordy]=3;
+            echo 'Попал ';
+        }
+        else{
+            echo 'Мазила';
+        }
+        $this->update();
+
+        $haveSheeps=false;
+        foreach ($this->matrix as $x => $yarr){
+            foreach ($yarr as $status){
+                if($status ==1){
+                    $haveSheeps=true;
+                    break 2;
+                }
+            }
+        }
+
+        if($haveSheeps==false){
+            echo 'Победил ' . $this->name;
+        }
     }
 }

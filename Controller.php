@@ -45,13 +45,8 @@ class Controller
                 if (isset($_GET['enemy']) && !empty($_GET['enemy']) ){
                     if (isset($_GET['coordx']) && isset($_GET['coordy'])){
                         $board=new Board($_GET['enemy']);
-                        $matrix=$board->load();
-                        if ($matrix[$_GET['coordx']][$_GET['coordy']] ==1){
-                            echo 'попал';
-                        }
-                        else{
-                            echo 'мазила';
-                        }
+                        $board->load();
+                        $board->shot($_GET['coordx'], $_GET['coordy']);
                     }
                     else{
                         echo 'координаты не введены';

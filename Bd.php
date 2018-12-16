@@ -22,6 +22,12 @@ class Bd
             echo $this->connect->error;
         }
     }
+    public function updateBoard($name, $coords){
+        $add=$this->connect->query('update `board` set `coords`= \''.$coords.'\' where `name`=\''.$name.'\'');
+        if(!$add){
+            echo $this->connect->error;
+        }
+    }
 
     public function loadBoard($name){
         if ($result = $this->connect->query('SELECT * FROM `board` where `name`=\''.$name.'\'')) {
